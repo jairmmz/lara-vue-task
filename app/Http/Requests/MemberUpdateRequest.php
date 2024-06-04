@@ -30,7 +30,6 @@ class MemberUpdateRequest extends BaseRequest
     public function messages(): array
     {
         return [
-            'id.exists' => 'El id no existe',
             'name.required' => 'El nombre es requerido',
             'name.string' => 'El nombre es inválido',
             'email.required' => 'El correo electrónico es requerido',

@@ -2,30 +2,45 @@
 
 namespace App\Http\Controllers;
 
+use App\Classes\ApiResponseHelper;
 use App\Events\NewUserEvent;
 use App\Http\Requests\UserLoginRequest;
 use App\Http\Requests\UserRegisterRequest;
+use App\Interfaces\UserRepositoryInterface;
 use App\Models\User;
+use Exception;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 
 class AuthController extends Controller
 {
+    private UserRepositoryInterface $userRepositoryInterface;
+
+    public function __construct(UserRepositoryInterface $userRepositoryInterface)
+    {
+        $this->userRepositoryInterface = $userRepositoryInterface;
+    }
+
     public function register(UserRegisterRequest $request): JsonResponse
     {
-        $user = User::create([
+        $data = [
             'email' => $request->input('email'),
-            'password' => Hash::make($request->input('password')),
+            'password' => $request->input('password'),
             'isValidEmail' => User::IS_INVALID_EMAIL,
             'remember_token' => Str::random(60)
-        ]);
+        ];
 
-        NewUserEvent::dispatch($user);
-
-        return response()->json([
-            'message' => 'Usuario creado exitosamente',
-        ]);
+        DB::beginTransaction();
+        try {
+            $user = $this->userRepositoryInterface->register($data);
+            NewUserEvent::dispatch($user);
+            DB::commit();
+            return ApiResponseHelper::sendRespone($user, 'Usuario creado exitosamente', 201);
+        } catch (Exception $e) {
+            return ApiResponseHelper::rollback($e);
+        }
     }
 
     public function login(UserLoginRequest $request): JsonResponse
