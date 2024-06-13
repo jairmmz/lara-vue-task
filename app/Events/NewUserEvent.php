@@ -15,15 +15,12 @@ class NewUserEvent
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    public $user;
-
     /**
      * Create a new event instance.
      */
-    public function __construct(User $user)
-    {
-        $this->user = $user;
-    }
+    public function __construct(
+        public User $user
+    ) { }
 
     /**
      * Get the channels the event should broadcast on.

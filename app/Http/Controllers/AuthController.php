@@ -2,91 +2,63 @@
 
 namespace App\Http\Controllers;
 
-use App\Classes\ApiResponseHelper;
-use App\Events\NewUserEvent;
 use App\Http\Requests\UserLoginRequest;
 use App\Http\Requests\UserRegisterRequest;
-use App\Interfaces\UserRepositoryInterface;
-use App\Models\User;
+use App\Services\AuthService;
 use Exception;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Str;
 
 class AuthController extends Controller
 {
-    private UserRepositoryInterface $userRepositoryInterface;
-
-    public function __construct(UserRepositoryInterface $userRepositoryInterface)
-    {
-        $this->userRepositoryInterface = $userRepositoryInterface;
-    }
+    public function __construct(
+        private AuthService $authService
+    ) {}
 
     public function register(UserRegisterRequest $request): JsonResponse
     {
-        $data = [
-            'email' => $request->input('email'),
-            'password' => $request->input('password'),
-            'isValidEmail' => User::IS_INVALID_EMAIL,
-            'remember_token' => Str::random(60)
-        ];
-
         DB::beginTransaction();
         try {
-            $user = $this->userRepositoryInterface->register($data);
-            NewUserEvent::dispatch($user);
+            $user = $this->authService->register($request->validated());
             DB::commit();
-            return ApiResponseHelper::sendRespone($user, 'Usuario creado exitosamente', 201);
+            return $this->success('Usuario registrado exitosamente', $user);
         } catch (Exception $e) {
-            return ApiResponseHelper::rollback($e);
+            DB::rollBack();
+            return $this->badRequest('Ocurrio un error inesperado', $e->getMessage());
         }
     }
 
-    public function login(UserLoginRequest $request): JsonResponse
+    public function login(UserLoginRequest $request)
     {
-        $user = User::where('email', $request->input('email'))->first();
+        try {
+            $user = $this->authService->login($request->only('email', 'password'));
 
-        if (!$user || !Hash::check($request->input('password'), $user->password)) {
-            return response()->json([
-                'message' => 'Email y/o contraseña incorrectos',
-                'isLoggedIn' => false,
-            ], 401);
+            if (isset($user['status']) == Response::HTTP_UNAUTHORIZED) {
+                return $this->badRequest('Error de validación', $user['message']);
+            }
+            return $this->success('Usuario autenticado exitosamente', $user);    
+        } catch (Exception $e) {
+            return $this->badRequest('Ocurrio un error inesperado', $e->getMessage());
         }
-
-        if (intval($user->isValidEmail) !== User::IS_VALID_EMAIL) {
-            NewUserEvent::dispatch($user);
-            return response()->json([
-                'message' => 'Necesitas verificar su correo electrónico para poder acceder a la aplicación',
-                'isLoggedIn' => false
-            ], 401);
-        }
-
-        $token = $user->createToken('myapptoken')->plainTextToken;
-
-        return response()->json([
-            'message' => 'Usuario autenticado exitosamente',
-            'user' => $user,
-            'token' => $token,
-            'isLoggedIn' => true
-        ]);
     }
 
-    function checkEmail($token): JsonResponse
+    public function checkEmail($token)
     {
-        $user = User::where('remember_token', $token)->first();
+        $user = $this->authService->checkEmail($token);
+
         if (!$user) {
-            return response()->json([
-                'message' => 'El token proporcionado no es válido',
-            ]);
+            return 'Token inválido';
         }
 
-        $user->isValidEmail = User::IS_VALID_EMAIL;
-        $user->save();
+        return 'Email verificado exitosamente, cierre esta pestaña y vuelva a la aplicación.';
+    }
 
-        return response()->json([
-            'message' => 'Email verificado exitosamente',
-            'user' => $user
-        ]);
+    public function logout(Request $request)
+    {
+        DB::table('personal_access_tokens')->where('tokenable_id', $request->userId)->delete();
+        // DB::table('personal_access_tokens')->where('token', $request->bearerToken())->delete();
+        return $this->success('Sesión cerrada exitosamente');
     }
 }

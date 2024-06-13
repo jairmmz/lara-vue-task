@@ -24,8 +24,7 @@ class CreateTaskRequest extends BaseRequest
         return [
             'name' => 'required',
             'project_id' => 'required|exists:projects,id',
-            'member_id' => 'required|exists:members,id',
-            'member_id.*' => 'exists:members,id'
+            'member_id.*' => 'required|exists:members,id'
         ];
     }
 

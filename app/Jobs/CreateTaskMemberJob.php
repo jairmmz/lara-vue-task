@@ -14,17 +14,11 @@ class CreateTaskMemberJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    /**
-     * Create a new job instance.
-     */
     public function __construct(
         public array $member_id,
         public Task $task
     ) { }
 
-    /**
-     * Execute the job.
-     */
     public function handle(): void
     {
         foreach ($this->member_id as $member_id) {

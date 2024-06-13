@@ -23,7 +23,6 @@ class ProjectStoreRequest extends BaseRequest
     {
         return [
             'name' => 'required',
-            'status' => 'required|in:0,1,2',
             'start_date' => 'required|date',
             'end_date' => 'required|date'
         ];
@@ -33,8 +32,6 @@ class ProjectStoreRequest extends BaseRequest
     {
         return [
             'name.required' => 'El nombre es requerido',
-            'status.required' => 'El estado es requerido',
-            'status.in' => 'El estado debe ser 0, 1 o 2',
             'start_date.required' => 'La fecha de inicio es requerida',
             'start_date.date' => 'La fecha de inicio debe ser una fecha válida',
             'end_date.required' => 'La fecha de fin es requerida',

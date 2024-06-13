@@ -22,7 +22,7 @@ class UserLoginRequest extends BaseRequest
     public function rules(): array
     {
         return [
-            'email' => 'required|email|exists:users,email',
+            'email' => 'required|email',
             'password' => 'required'
         ];
     }
@@ -32,7 +32,6 @@ class UserLoginRequest extends BaseRequest
         return [
             'email.required' => 'El email es requerido',
             'email.email' => 'El email no es válido',
-            'email.exists' => 'El email no se encuentra registrado',
             'password.required' => 'La contraseña es requerida'
         ];
     }
