@@ -9,8 +9,8 @@ export function usePinnedProject() {
     async function pinnedProject(projectId: string) {
         try {
             isLoading.value = true;
-            const response = await makeHttpRequest<{ projectId: string}, { message: string }>
-            ('project/pinned', 'POST', { projectId: projectId });
+            const response = await makeHttpRequest<{ project_id: string}, { message: string }>
+            ('project/pinned', 'POST', { project_id: projectId });
             isLoading.value = false;
             showSuccess(response.message);
         } catch (error) {

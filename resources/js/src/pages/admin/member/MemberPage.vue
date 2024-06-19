@@ -7,7 +7,7 @@
         </RouterLink>
     </div>
     <MemberTable @edit-member="editMember" :is-loading="isLoading" @get-members="getMembers" :members="memberData">
-    <template #pagination>
+        <template #pagination>
             <TailwindPagination v-if="memberData?.data" :data="memberData?.data" @pagination-change-page="getMembers" />
         </template>
     </MemberTable>

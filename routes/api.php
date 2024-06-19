@@ -32,6 +32,8 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::post('/pinned', 'pinnedProject');
         Route::get('/get-project/{slug}', 'getProject');
         Route::get('/count-projects', 'countProject');
+        Route::get('/pinned-projects', 'getPinnedProject');
+        Route::get('/chart-data-proyects', 'getProjectChartData');
     });
 
     // --- Route for members - /api/member
@@ -44,10 +46,19 @@ Route::middleware('auth:sanctum')->group(function () {
     // --- Route for task - /api/task
     Route::controller(TaskController::class)->prefix('/task')->group(function () {
         Route::post('/save', 'createTask');
-        Route::get('/task-not-started-topending/{task}', 'taskToNotStartedToPending');
-        Route::get('/task-pending-to-completed/{task}', 'taskToPendingToComplete');
-        Route::get('/task-pending-to-not-started/{task}', 'taskToPendingToNotStarted');
-        Route::get('/task-completed-to-pending/{task}', 'taskToCompletedToPending');
-        Route::get('/task-completed-to-not-started/{task}', 'taskToCompletedToNotStarted');
+        Route::post('/not-started-to-pending', 'taskToNotStartedToPending');
+        Route::post('/pending-to-completed', 'taskToPendingToComplete');
+        Route::post('/completed-to-pending', 'taskToCompletedToPending');
+
+        Route::post('/completed-to-not-started', 'taskToCompletedToNotStarted');
+        Route::post('/not-started-to-completed', 'taskToNotStartedToCompleted');
+        Route::post('/pending-to-not-started', 'taskToPendingToNotStarted');
     });
 });
+
+
+
+/*
+|--------------------------------------------------------------------------
+| Routes Fronted in Vue Router
+|--------------------------------------------------------------------------*/

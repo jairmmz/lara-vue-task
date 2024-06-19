@@ -1,0 +1,140 @@
+{
+    "message": "Proyecto recuperado exitosamente.",
+    "data": {
+      "id": "9c3803a7-d9e6-4d45-8b1d-15cc1f0d7169",
+      "name": "Curso de laravel 11",
+      "status": 1,
+      "start_date": "2024-06-05",
+      "end_date": "2024-06-28",
+      "slug": "curso-de-laravel-11-bYx96Jx2Ep-1717645463",
+      "tasks": [
+        {
+          "id": "9c381845-42c5-4ad5-aee8-ce253a8a50f3",
+          "project_id": "9c3803a7-d9e6-4d45-8b1d-15cc1f0d7169",
+          "name": "Creación del crud de Auth",
+          "status": 1,
+          "task_members": [
+            {
+              "id": "9c381845-6eaf-4c08-be1a-935607c30352",
+              "project_id": "9c3803a7-d9e6-4d45-8b1d-15cc1f0d7169",
+              "task_id": "9c381845-42c5-4ad5-aee8-ce253a8a50f3",
+              "member_id": "9c37fcc7-b3a9-417c-a88b-431c5cd38440",
+              "member": {
+                "id": "9c37fcc7-b3a9-417c-a88b-431c5cd38440",
+                "name": "Miembro 2 edit edit",
+                "email": "member_2@gmail.com"
+              }
+            },
+            {
+              "id": "9c381845-6fbb-455f-8754-1a9c02a147ac",
+              "project_id": "9c3803a7-d9e6-4d45-8b1d-15cc1f0d7169",
+              "task_id": "9c381845-42c5-4ad5-aee8-ce253a8a50f3",
+              "member_id": "9c37fcf5-98a0-4f87-9c1b-5377b53dd795",
+              "member": {
+                "id": "9c37fcf5-98a0-4f87-9c1b-5377b53dd795",
+                "name": "Miembro 3 edit",
+                "email": "member_3_edit@gmail.com"
+              }
+            }
+          ]
+        },
+        {
+          "id": "9c381904-e3bb-413f-8475-9a21373bd683",
+          "project_id": "9c3803a7-d9e6-4d45-8b1d-15cc1f0d7169",
+          "name": "Creación del crud de Project",
+          "status": 2,
+          "task_members": [
+            {
+              "id": "9c381904-f03a-469d-88b1-9f45df347cff",
+              "project_id": "9c3803a7-d9e6-4d45-8b1d-15cc1f0d7169",
+              "task_id": "9c381904-e3bb-413f-8475-9a21373bd683",
+              "member_id": "9c37fcc7-b3a9-417c-a88b-431c5cd38440",
+              "member": {
+                "id": "9c37fcc7-b3a9-417c-a88b-431c5cd38440",
+                "name": "Miembro 2 edit edit",
+                "email": "member_2@gmail.com"
+              }
+            },
+            {
+              "id": "9c381904-f0f1-4619-b7a1-f4281749084e",
+              "project_id": "9c3803a7-d9e6-4d45-8b1d-15cc1f0d7169",
+              "task_id": "9c381904-e3bb-413f-8475-9a21373bd683",
+              "member_id": "9c37fcf5-98a0-4f87-9c1b-5377b53dd795",
+              "member": {
+                "id": "9c37fcf5-98a0-4f87-9c1b-5377b53dd795",
+                "name": "Miembro 3 edit",
+                "email": "member_3_edit@gmail.com"
+              }
+            }
+          ]
+        },
+        {
+          "id": "9c4c23e5-cb20-4564-98d9-ff2ddc5714b3",
+          "project_id": "9c3803a7-d9e6-4d45-8b1d-15cc1f0d7169",
+          "name": "Validación de formularios",
+          "status": 1,
+          "task_members": [
+            {
+              "id": "9c4c23e7-fefb-4c68-ac1d-987c8adf8917",
+              "project_id": "9c3803a7-d9e6-4d45-8b1d-15cc1f0d7169",
+              "task_id": "9c4c23e5-cb20-4564-98d9-ff2ddc5714b3",
+              "member_id": "9c37fcc7-b3a9-417c-a88b-431c5cd38440",
+              "member": {
+                "id": "9c37fcc7-b3a9-417c-a88b-431c5cd38440",
+                "name": "Miembro 2 edit edit",
+                "email": "member_2@gmail.com"
+              }
+            },
+            {
+              "id": "9c4c23e8-001e-4f6e-b93a-6d21b235e648",
+              "project_id": "9c3803a7-d9e6-4d45-8b1d-15cc1f0d7169",
+              "task_id": "9c4c23e5-cb20-4564-98d9-ff2ddc5714b3",
+              "member_id": "9c37fcf5-98a0-4f87-9c1b-5377b53dd795",
+              "member": {
+                "id": "9c37fcf5-98a0-4f87-9c1b-5377b53dd795",
+                "name": "Miembro 3 edit",
+                "email": "member_3_edit@gmail.com"
+              }
+            }
+          ]
+        },
+        {
+          "id": "9c4c24cb-fb63-43de-b7d2-767057600933",
+          "project_id": "9c3803a7-d9e6-4d45-8b1d-15cc1f0d7169",
+          "name": "Integración de Chart Data",
+          "status": 1,
+          "task_members": [
+            {
+              "id": "9c4c24cc-07ce-4a26-a0df-1322ef8781f7",
+              "project_id": "9c3803a7-d9e6-4d45-8b1d-15cc1f0d7169",
+              "task_id": "9c4c24cb-fb63-43de-b7d2-767057600933",
+              "member_id": "9c37fcc7-b3a9-417c-a88b-431c5cd38440",
+              "member": {
+                "id": "9c37fcc7-b3a9-417c-a88b-431c5cd38440",
+                "name": "Miembro 2 edit edit",
+                "email": "member_2@gmail.com"
+              }
+            },
+            {
+              "id": "9c4c24cc-0855-4edf-9047-ed2d798cb8d0",
+              "project_id": "9c3803a7-d9e6-4d45-8b1d-15cc1f0d7169",
+              "task_id": "9c4c24cb-fb63-43de-b7d2-767057600933",
+              "member_id": "9c37fcf5-98a0-4f87-9c1b-5377b53dd795",
+              "member": {
+                "id": "9c37fcf5-98a0-4f87-9c1b-5377b53dd795",
+                "name": "Miembro 3 edit",
+                "email": "member_3_edit@gmail.com"
+              }
+            }
+          ]
+        }
+      ],
+      "task_progress": {
+        "id": "9c3803a7-ddb3-4682-b4e9-e1c93f99a7bc",
+        "project_id": "9c3803a7-d9e6-4d45-8b1d-15cc1f0d7169",
+        "pinned_on_dashboard": 1,
+        "progress": "80"
+      }
+    },
+    "code": 200
+  }

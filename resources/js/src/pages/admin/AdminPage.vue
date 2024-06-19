@@ -11,15 +11,11 @@ const { logout } = useLogoutUser();
 const userData  = getUserData();
 
 const logoutUser = async () => {
-    const userId = userData?.id;
-    
-    if (typeof userId !== 'undefined') {
-        await logout(userId);
-        localStorage.clear();
-        setTimeout(() => {
-            window.location.href = '/login';
-        }, 1000);
-    }
+    await logout();
+    localStorage.clear();
+    setTimeout(() => {
+        window.location.href = '/login';
+    }, 1000);
 };
 
 </script>

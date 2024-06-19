@@ -12,5 +12,5 @@ class Member extends Model
 
     protected $primaryKey = 'id';
 
-    protected $guarded = [];
+    protected $fillable = ['name', 'email'];
 }

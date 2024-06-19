@@ -7,15 +7,15 @@
         <div class="container-fluid">
             <table class="min-w-full divide-y divide-gray-200">
                 <thead>
-                    <tr>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ID</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nombre</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Correo Electrónico</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Acción</th>
+                    <tr class="font-bold">
+                        <th class="px-6 py-3 text-left text-xs text-gray-500 uppercase tracking-wider">ID</th>
+                        <th class="px-6 py-3 text-left text-xs text-gray-500 uppercase tracking-wider">Nombre</th>
+                        <th class="px-6 py-3 text-left text-xs text-gray-500 uppercase tracking-wider">Correo Electrónico</th>
+                        <th class="px-6 py-3 text-left text-xs text-gray-500 uppercase tracking-wider">Acción</th>
                     </tr>
                 </thead>
                 <tbody class="bg-white divide-y divide-gray-200">
-                    <tr v-for="member in members?.data.data" :key="member.id">
+                    <tr v-for="member in members.data?.data" :key="member.id">
                         <td class="px-6 py-4 whitespace-nowrap">{{ (member.id).substring(0, 7) }}</td>
                         <td class="px-6 py-4 whitespace-nowrap">{{ member.name }}</td>
                         <td class="px-6 py-4 whitespace-nowrap">{{ member.email }}</td>
@@ -39,7 +39,7 @@ import { IGetMembers, IMemberUpdate } from '../interfaces/MemberInterface';
 const query = ref<string>('');
 
 defineProps<{
-    members: IGetMembers | undefined;
+    members: IGetMembers;
     isLoading: boolean;
 }>();
 

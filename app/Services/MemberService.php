@@ -2,6 +2,8 @@
 
 namespace App\Services;
 
+use App\DataTransferObjects\MemberDto;
+use App\Http\Resources\MemberResource;
 use App\Models\Member;
 
 class MemberService
@@ -11,24 +13,29 @@ class MemberService
         $members = Member::select('id', 'name', 'email');
 
         if (!is_null($query) && !empty($query)) {
-            // Buscar por nombre o correo electrónico
             $members->where('name', 'like', "%$query%")->orWhere('email', 'like', "%$query%")->orderBy('id', 'desc');
         }
 
         return $members->paginate(5);
     }
 
-    public function store(array $data): Member
+    public function store(MemberDto $dto): MemberResource
     {
-        $member = Member::create($data);
+        $member = Member::create([
+            'name' => $dto->name,
+            'email' => $dto->email
+        ]);
 
-        return $member;
+        return MemberResource::make($member);
     }
 
-    public function update(Member $member, array $data): Member
+    public function update(Member $member, MemberDto $dto): MemberResource
     {
-        $member->update($data);
+        $member->update([
+            'name' => $dto->name,
+            'email' => $dto->email
+        ]);
 
-        return $member;
+        return MemberResource::make($member);
     }
 }

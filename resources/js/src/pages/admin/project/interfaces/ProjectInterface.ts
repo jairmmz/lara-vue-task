@@ -21,7 +21,6 @@ export interface IGetProjects {
 export interface ItaskProgress {
     id: string;
     project_id: string;
+    pinned_on_dashboard: number;
     progress: string;
-    created_at: string;
-    updated_at: string;
 }

@@ -16,7 +16,7 @@ export function useCreateOrUpdateMember() {
             isLoading.value = true;
             const response = isEdit.value ? await update() : await create();
             showSuccess(response.message);
-            member.value = {} as IMember;
+            // member.value = {} as IMember;
         } catch (error: any) {
             isLoading.value = false;
             showErrorResponse(error);
@@ -36,7 +36,7 @@ async function create() {
 async function update() {
     const data = await makeHttpRequest<IMember, IMemberResponse>
     (`member/update/${member.value.id}`, 'PUT', member.value);
-    isEdit.value = false;
+    // isEdit.value = false;
 
     return data;
 }

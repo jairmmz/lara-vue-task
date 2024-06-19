@@ -1,18 +1,16 @@
-import { ref } from "vue";
-import { makeHttpRequest } from "../../../helpers/makeHttpRequest";
-import { showErrorResponse } from "../../../helpers/utils";
-import { showSuccess } from "../../../helpers/toastNotification";
-import { useUserStore } from "../../../store/user";
+import { ref } from 'vue';
+import { makeHttpRequest } from '../../../helpers/makeHttpRequest';
+import { showErrorResponse } from '../../../helpers/utils';
+import { showSuccess } from '../../../helpers/toastNotification';
 
 export function useLogoutUser() {
     const isLoading = ref(false);
-    const { setToken, setUser } = useUserStore();
 
-    async function logout(userId: string | undefined) {
+    async function logout() {
         try {
             isLoading.value = true;
-            const response = await makeHttpRequest<{ userId: string | undefined }, { message: string }>
-            ('auth/logout', 'POST', { userId: userId });
+            const response = await makeHttpRequest<undefined, { message: string }>
+            ('auth/logout', 'POST');
             isLoading.value = false;
             showSuccess(response.message);
         } catch (error) {

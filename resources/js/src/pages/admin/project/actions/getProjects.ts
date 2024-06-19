@@ -1,5 +1,5 @@
 import { ref } from "vue";
-import { IGetProjects, IProject } from "../interfaces/ProjectInterface";
+import { IGetProjects } from "../interfaces/ProjectInterface";
 import { makeHttpRequest } from "../../../../helpers/makeHttpRequest";
 import { showErrorResponse } from "../../../../helpers/utils";
 

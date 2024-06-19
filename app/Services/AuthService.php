@@ -2,7 +2,9 @@
 
 namespace App\Services;
 
+use App\DataTransferObjects\UserDto;
 use App\Events\NewUserEvent;
+use App\Http\Resources\UserResource;
 use App\Models\User;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Hash;
@@ -10,11 +12,11 @@ use Illuminate\Support\Str;
 
 class AuthService
 {
-    public function register(array $data): User
+    public function register(UserDto $dto): UserResource
     {
         $data = [
-            'email' => $data['email'],
-            'password' => Hash::make($data['password']),
+            'email' => $dto->email,
+            'password' => Hash::make($dto->password),
             'isValidEmail' => User::IS_INVALID_EMAIL,
             'remember_token' => Str::random(60)
         ];
@@ -22,14 +24,14 @@ class AuthService
         $user = User::create($data);
         NewUserEvent::dispatch($user);
 
-        return $user;
+        return UserResource::make($user);
     }
 
-    public function login(array $data): array
+    public function login(UserDto $dto): array
     {
-        $user = User::where('email', $data['email'])->first();
+        $user = User::where('email', $dto->email)->first();
 
-        if (!$user || !Hash::check($data['password'], $user->password)) {
+        if (!$user || !Hash::check($dto->password, $user->password)) {
             return ['message' => ['Email y/o contraseña incorrectos'], 'status' => Response::HTTP_UNAUTHORIZED];
         }
 
@@ -38,12 +40,13 @@ class AuthService
             return ['message' => ['Necesitas verificar su correo electrónico para poder acceder a la aplicación'], 'status' => Response::HTTP_UNAUTHORIZED];
         }
 
+        /** @var \App\Models\User $user */
         $token = $user->createToken('auth_token')->plainTextToken;
 
-        return ['user' => $user, 'token' => $token];
+        return ['user' => UserResource::make($user), 'token' => $token];
     }
 
-    public function checkEmail($token): array
+    public function checkEmail(string $token): array | bool
     {
         $user = User::where('remember_token', $token)->first();
 

@@ -6,7 +6,7 @@ import { IGetMembers } from '../interfaces/MemberInterface';
 export function useGetMember() {
     const isLoading = ref(false);
     const query = ref('');
-    const memberData = ref<IGetMembers>();
+    const memberData = ref<IGetMembers>({} as IGetMembers);
 
     async function getMembers(page: number = 1, query: string = '') {
         try {

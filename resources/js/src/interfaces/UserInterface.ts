@@ -2,10 +2,6 @@ export interface IUser {
     id: string;
     email: string;
     isValidEmail: number;
-    email_verified_at: null | string;
-    remember_token: null | string;
-    created_at: string;
-    updated_at: string;
 }
 
 export interface IUserRegister {

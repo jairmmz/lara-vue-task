@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Events\CreateProjectEvent;
+use App\DataTransferObjects\ProjectDto;
+use App\Http\Requests\GetProjectChartDataRequest;
 use App\Http\Requests\PinnetProjectRequest;
 use App\Http\Requests\ProjectStoreRequest;
 use App\Http\Requests\ProjectUpdateRequest;
 use App\Models\Project;
-use App\Models\TaskProgress;
 use App\Services\ProjectService;
 use Exception;
 use Illuminate\Http\JsonResponse;
@@ -44,27 +44,34 @@ class ProjectController extends Controller
     {
         DB::beginTransaction();
         try {
-            $project = $this->projectService->store($request->validated());
+            $project = $this->projectService->store(ProjectDto::requestStore($request));
             DB::commit();
-            return $this->success('Proyecto creado exitosamente.', $project);
+            return $this->success('Proyecto creado exitosamente.', $project, 201);
         } catch (Exception $e) {
             DB::rollBack();
             return $this->badRequest('Ocurrio un error inesperado.', $e->getMessage());
         }
     }
 
-    public function update(Project $project, ProjectUpdateRequest $request): JsonResponse
+    public function update(ProjectUpdateRequest $request, Project $project): JsonResponse
     {
-        $project = $this->projectService->update($project, $request->validated());
+        $project = $this->projectService->update($project, ProjectDto::requestUpdate($request));
 
         return $this->success('Proyecto actualizado exitosamente.', $project);
     }
 
     public function pinnedProject(PinnetProjectRequest $request): JsonResponse
     {
-        $this->projectService->pinnedProject($request->validated());
-
-        return $this->success('El proyecto ha sido fijado en el dashboard.');
+        DB::beginTransaction();
+        try {
+            $this->projectService->pinnedProject($request->validated('project_id'));
+            DB::commit();
+            return $this->success('El proyecto ha sido fijado en el dashboard.');
+        } catch (Exception $e) {
+            // Mandar el $e->getMesssage() como evento o job por correo electrónico al administrador o enviarlo al Log.
+            DB::rollBack();
+            return $this->badRequest('Ocurrio un error inesperado.');
+        }
     }
 
     public function countProject(): JsonResponse
@@ -72,5 +79,19 @@ class ProjectController extends Controller
         $count = $this->projectService->count();
 
         return $this->success('Proyectos contados exitosamente.', $count);
+    }
+
+    public function getPinnedProject()
+    {
+        $project = $this->projectService->getPinnedProject();
+
+        return $this->success('Proyecto fijado recuperado exitosamente.', $project);
+    }
+
+    public function getProjectChartData(GetProjectChartDataRequest $request)
+    {
+        $project = $this->projectService->projectChartData($request->validated('project_id'));
+
+        return $this->success('Datos de proyectos recuperados exitosamente.', $project);
     }
 }

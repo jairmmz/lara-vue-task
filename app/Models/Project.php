@@ -5,7 +5,6 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Str;
 
 class Project extends Model
 {
@@ -18,11 +17,6 @@ class Project extends Model
     const COMPLETED = 2;
 
     protected $guarded = [];
-
-    public static function generateSlug($name)
-    {
-        return Str::slug($name) . '-' . Str::random(10) . '-' . time();
-    }
 
     public function taskProgress()
     {

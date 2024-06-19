@@ -2,6 +2,7 @@
 
 namespace App\Events;
 
+use App\Models\Project;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Broadcasting\PresenceChannel;
@@ -10,7 +11,7 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class CreateProjectEvent
+class CreateProjectEvent implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
@@ -18,7 +19,8 @@ class CreateProjectEvent
      * Create a new event instance.
      */
     public function __construct(
-        public $project
+        public Project $project,
+        public int $countProject
     ){}
 
     /**
@@ -29,7 +31,7 @@ class CreateProjectEvent
     public function broadcastOn(): array
     {
         return [
-            new PrivateChannel('channel-name'),
+            new channel('countProject'),
         ];
     }
 }

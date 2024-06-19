@@ -8,7 +8,7 @@ export interface IGetMembers {
     message: string;
     data: {
         data: IMember[];
-    };
+    } | null;
     code: number;
 }
 
