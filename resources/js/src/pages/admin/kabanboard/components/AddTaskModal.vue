@@ -42,7 +42,7 @@
                             </tr>
                         </thead>
                         <tbody class="bg-white divide-y divide-gray-200 text-sm">
-                            <tr v-for="member in members.data.data" :key="member.id">
+                            <tr v-for="member in members.data?.data" :key="member.id">
                                 <td class="py-2">{{ member.name }}</td>
                                 <td class="py-2">{{ member.email }}</td>
                                 <td class="text-center">

@@ -16,6 +16,7 @@ export function useCreateOrUpdateMember() {
             isLoading.value = true;
             const response = isEdit.value ? await update() : await create();
             showSuccess(response.message);
+            isLoading.value = false;
             // member.value = {} as IMember;
         } catch (error: any) {
             isLoading.value = false;
